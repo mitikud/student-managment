@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
-import { toast } from 'react-toastify';
 import { login } from '../api';
 
 function Login({ setLoggedIn }) {
@@ -11,9 +10,8 @@ function Login({ setLoggedIn }) {
         try {
             await login({ username, password });
             setLoggedIn(true);
-            toast.success('Logged in successfully!');
         } catch (error) {
-            toast.error('Login failed: ' + (error.response?.data || error.message));
+            alert('Login failed');
         }
     };
 

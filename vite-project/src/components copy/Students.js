@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, List, ListItem, ListItemText } from '@mui/material';
-import { toast } from 'react-toastify';
 import { getStudents, createStudent } from '../api';
 
 function Students() {
@@ -16,22 +15,17 @@ function Students() {
             const data = await getStudents();
             setStudents(data);
         } catch (error) {
-            toast.error('Failed to fetch students: ' + (error.response?.data || error.message));
+            alert('Failed to fetch students');
         }
     };
 
     const handleCreateStudent = async () => {
-        if (!newStudent.name || !newStudent.email) {
-            toast.error('Name and email are required');
-            return;
-        }
         try {
             const student = await createStudent(newStudent);
             setStudents([...students, student]);
             setNewStudent({ name: '', email: '' });
-            toast.success('Student created successfully');
         } catch (error) {
-            toast.error('Failed to create student: ' + (error.response?.data || error.message));
+            alert('Failed to create student');
         }
     };
 
