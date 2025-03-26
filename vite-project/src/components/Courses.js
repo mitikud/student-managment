@@ -56,25 +56,54 @@ function Courses() {
     }
   };
 
-  const handleCreateCourse = async () => {
-    try {
-      const course = await createCourse(newCourse);
-      setCourses([...courses, course]);
-      setNewCourse({ name: "", teacherId: "" });
-    } catch (error) {
-      alert("Failed to create course");
+//   const handleCreateCourse = async () => {
+//     try {
+//       const course = await createCourse(newCourse);
+//       setCourses([...courses, course]);
+//       setNewCourse({ name: "", teacherId: "" });
+//     } catch (error) {
+//       alert("Failed to create course");
+//     }
+//   };
+const handleCreateCourse = async () => {
+    if (!newCourse.name || !newCourse.teacherId) {
+        toast.error('Course name and teacher are required');
+        return;
     }
-  };
+    try {
+        const course = await createCourse(newCourse);
+        setCourses([...courses, course]);
+        setNewCourse({ name: '', teacherId: '' });
+        toast.success('Course created successfully');
+    } catch (error) {
+        toast.error('Failed to create course: ' + (error.response?.data || error.message));
+    }
+};
 
-  const handleEnroll = async () => {
-    try {
-      await enrollStudent(enrollment.courseId, enrollment.studentId);
-      fetchCourses(); // Refresh course list
-      setEnrollment({ courseId: "", studentId: "" });
-    } catch (error) {
-      alert("Failed to enroll student");
+//   const handleEnroll = async () => {
+//     try {
+//       await enrollStudent(enrollment.courseId, enrollment.studentId);
+//       fetchCourses(); // Refresh course list
+//       setEnrollment({ courseId: "", studentId: "" });
+//     } catch (error) {
+//       alert("Failed to enroll student");
+//     }
+//   };
+
+const handleEnroll = async () => {
+    if (!enrollment.courseId || !enrollment.studentId) {
+        toast.error('Course and student are required for enrollment');
+        return;
     }
-  };
+    try {
+        await enrollStudent(enrollment.courseId, enrollment.studentId);
+        fetchCourses();
+        setEnrollment({ courseId: '', studentId: '' });
+        toast.success('Student enrolled successfully');
+    } catch (error) {
+        toast.error('Failed to enroll student: ' + (error.response?.data || error.message));
+    }
+};
 
   return (
     <div>

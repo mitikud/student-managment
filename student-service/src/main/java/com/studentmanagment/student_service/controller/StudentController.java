@@ -27,7 +27,7 @@ public class StudentController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
         Student savedStudent = studentRepository.save(student);
         kafkaTemplate.send("student-events", "Student created: " + savedStudent.getId());
         return ResponseEntity.ok(savedStudent);

@@ -20,12 +20,17 @@ function Teachers() {
     };
 
     const handleCreateTeacher = async () => {
+        if (!newTeacher.name || !newTeacher.email) {
+            toast.error('Name and email are required');
+            return;
+        }
         try {
             const teacher = await createTeacher(newTeacher);
             setTeachers([...teachers, teacher]);
             setNewTeacher({ name: '', email: '' });
+            toast.success('Teacher created successfully');
         } catch (error) {
-            alert('Failed to create teacher');
+            toast.error('Failed to create teacher: ' + (error.response?.data || error.message));
         }
     };
 

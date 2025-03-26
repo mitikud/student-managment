@@ -1,9 +1,14 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8082/auth'; // Auth Service
-const STUDENT_API_URL = 'http://localhost:8083/students'; // Student Service
-const TEACHER_API_URL = 'http://localhost:8084/teachers';
-const COURSE_API_URL = 'http://localhost:8085/courses';
+// const API_URL = 'http://localhost:8082/auth'; // Auth Service
+// const STUDENT_API_URL = 'http://localhost:8083/students'; // Student Service
+// const TEACHER_API_URL = 'http://localhost:8084/teachers';
+// const COURSE_API_URL = 'http://localhost:8085/courses';
+
+const API_URL = 'http://localhost:8080/auth';
+const STUDENT_API_URL = 'http://localhost:8080/students';
+const TEACHER_API_URL = 'http://localhost:8080/teachers';
+const COURSE_API_URL = 'http://localhost:8080/courses';
 
 const getHeaders = () => ({
     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
