@@ -18,6 +18,10 @@ function App() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setLoggedIn(false);
+    };
     const fetchStudents = async () => {
         try {
             const data = await getStudents();
@@ -37,53 +41,87 @@ function App() {
         }
     };
 
+
     return (
-      <div>
-          {!loggedIn ? (
-              <div>
-                  <h1>Login</h1>
-                  <input
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="Username"
-                  />
-                  <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Password"
-                  />
-                  <button onClick={handleLogin}>Login</button>
-              </div>
-          ) : (
-              <div>
-                  <h1>Students</h1>
-                  <ul>
-                      {students.map((student) => (
-                          <li key={student.id}>
-                              {student.name} - {student.email}
-                          </li>
-                      ))}
-                  </ul>
-                  <h2>Add Student</h2>
-                  <input
-                      type="text"
-                      value={newStudent.name}
-                      onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
-                      placeholder="Name"
-                  />
-                  <input
-                      type="email"
-                      value={newStudent.email}
-                      onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
-                      placeholder="Email"
-                  />
-                  <button onClick={handleCreateStudent}>Add Student</button>
-              </div>
-          )}
-      </div>
-  );
+        <Router>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography variant="h6" style={{ flexGrow: 1 }}>Student Management System</Typography>
+                    {loggedIn && (
+                        <>
+                            <Button color="inherit" component={Link} to="/students">Students</Button>
+                            <Button color="inherit" component={Link} to="/teachers">Teachers</Button>
+                            <Button color="inherit" component={Link} to="/courses">Courses</Button>
+                            <Button color="inherit" onClick={handleLogout}>Logout</Button>
+                        </>
+                    )}
+                </Toolbar>
+            </AppBar>
+            <Container style={{ marginTop: 20 }}>
+                <Switch>
+                    <Route exact path="/" component={() => <Login setLoggedIn={setLoggedIn} />} />
+                    {loggedIn && (
+                        <>
+                            <Route path="/students" component={Students} />
+                            <Route path="/teachers" component={Teachers} />
+                            <Route path="/courses" component={Courses} />
+                        </>
+                    )}
+                </Switch>
+            </Container>
+        </Router>
+    );
 }
 
 export default App;
+
+//     return (
+//       <div>
+//           {!loggedIn ? (
+//               <div>
+//                   <h1>Login</h1>
+//                   <input
+//                       type="text"
+//                       value={username}
+//                       onChange={(e) => setUsername(e.target.value)}
+//                       placeholder="Username"
+//                   />
+//                   <input
+//                       type="password"
+//                       value={password}
+//                       onChange={(e) => setPassword(e.target.value)}
+//                       placeholder="Password"
+//                   />
+//                   <button onClick={handleLogin}>Login</button>
+//               </div>
+//           ) : (
+//               <div>
+//                   <h1>Students</h1>
+//                   <ul>
+//                       {students.map((student) => (
+//                           <li key={student.id}>
+//                               {student.name} - {student.email}
+//                           </li>
+//                       ))}
+//                   </ul>
+//                   <h2>Add Student</h2>
+//                   <input
+//                       type="text"
+//                       value={newStudent.name}
+//                       onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
+//                       placeholder="Name"
+//                   />
+//                   <input
+//                       type="email"
+//                       value={newStudent.email}
+//                       onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+//                       placeholder="Email"
+//                   />
+//                   <button onClick={handleCreateStudent}>Add Student</button>
+//               </div>
+//           )}
+//       </div>
+//   );
+// }
+
+// export default App;

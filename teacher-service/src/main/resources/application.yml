@@ -1,0 +1,21 @@
+
+server:
+    
+  port: 8084
+spring:
+  application:
+    name: teacher-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/teacher_db
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+jwt:
+  secret: your-very-secure-secret-key
